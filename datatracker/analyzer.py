@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request, redirect, flash, render_template, url_for, Blueprint
+from types import SimpleNamespace
+import requests, json
 
 bp = Blueprint('analyzer', __name__)
 
@@ -7,12 +9,18 @@ bp = Blueprint('analyzer', __name__)
 def test():
     return "All good!"
 
-
-@bp.route('/analyzer')
+@bp.route('/analyzer', methods=['GET'])
 def index():
-    message = "This text is coming from the 'analyzer.py' module, not the html file!"
-    phrase = "Python is cool!"
-    return render_template('analyzer/index.html', message=message, word=phrase)
+    response = requests.get("https://api.dccresource.com/api/games/5faac562db090e1a5c2dea16")
+    pokemongs = json.loads(response.content, object_hook=lambda d:SimpleNamespace(**d))
+    return render_template('analyzer/index.html',game = pokemongs)
+    #games = API call
+
+# @bp.route('/analyzer')
+# def index():
+#     message = "This text is coming from the 'analyzer.py' module, not the html file!"
+#     phrase = "Python is cool!"
+#     return render_template('analyzer/index.html', message=message, word=phrase)
 
 
 @bp.route('/postform', methods=('GET', 'POST'))
