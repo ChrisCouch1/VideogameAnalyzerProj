@@ -1,0 +1,2 @@
+# VideogameAnalyzerProj
+Video Game Data Analyzation &amp; Visualization Learning objective: Use Python Flask to mine, analyze, and visualize data regarding video games Technologies: Python, Flask, HTML, CSS, Postman, Chart.js (but can pick whatever library you want) Intro: As an employee of a data analysis consulting company, you have been tasked with the job of collecting and analyzing data regarding the video game industry. The analysis should answer various evaluation questions regarding what console system is the best to invest in based on video game data.
