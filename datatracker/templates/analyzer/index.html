@@ -27,7 +27,15 @@
 
 {{ game }}
 
-{{ foundgame }}
+    {% for game in foundgame %}
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ game['name'] }} </h5>
+            <p class="card-text">{{game['platform'] }} - {{game['year'] }} - {{game['publisher'] }}</p>
+            <a href="#" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+    {% endfor %}
 
 <p>(Always remember to close off your ifs and your loops!)</p>
 {% endblock %}
