@@ -9,11 +9,23 @@ bp = Blueprint('analyzer', __name__)
 def test():
     return "All good!"
 
-@bp.route('/analyzer', methods=['GET'])
+@bp.route('/analyzer', methods=['GET', 'POST'])
 def index():
+
     response = requests.get("https://api.dccresource.com/api/games/5faac562db090e1a5c2dea16")
-    pokemongs = json.loads(response.content, object_hook=lambda d:SimpleNamespace(**d))
-    return render_template('analyzer/index.html',game = pokemongs)
+    games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
+
+    if request.method == 'POST':
+        response = requests.get("https://api.dccresource.com/api/games/")
+        games = json.loads(response.content, object_hook=lambda d:SimpleNamespace(**d))
+
+        user_input = request.form['gametitlesearch']
+        foundgame = []
+        for game in games:
+            if user_input in game.name:
+                foundgame.append(game)
+
+    return render_template('analyzer/index.html', foundgame = foundgame)
     #games = API call
 
 # @bp.route('/analyzer')
