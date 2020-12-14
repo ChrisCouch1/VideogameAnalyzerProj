@@ -5,7 +5,20 @@
 {% endblock %}
 
 {% block content %}
-<p>This starter code project is built around a 'sample.py' module. Its view files live in 'templates/sample'. It's recommended you build your own project module and template folder for your contributions to the project.</p>
+<p>Enter a videogame title below to retrieve its details</p>
+
+
+<form>
+    <div class = "row">
+        <div class = "col-9">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+        </div>
+        <div class = "col-3 d-grid">
+            <button class="btn btn-primary btn-block" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
 
 <p>This page extends the "base.html" file and inserts its various "blocks" (header, title and content) into the locations laid out for those blocks.</p>
 <p>This behaves similar to the '_Layout' feature in ASP.NET and allows you to easily keep a consistent theme across many pages and reuse elements like navbars.</p>
