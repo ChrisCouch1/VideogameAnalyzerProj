@@ -4,4 +4,35 @@
 {% endblock %}
 
 {% block content %}
+
+{{ sales }}
+
+<canvas id="salesChart" width="400" height="400"></canvas>
+
+<script src="./../../static/chartjs/dist/Chart.js"></script>
+<script>
+    var ctx = document.getElementById('salesChart');
+    var salesChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for platform in platforms %}'{{ platform }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+                label: 'Global Sales - Millions Games Sold',
+                data: [{% for salesfig in sales %}{{ salesfig }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
 {% endblock %}
