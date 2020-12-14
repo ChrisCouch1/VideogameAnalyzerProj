@@ -35,6 +35,14 @@ def index():
 #     return render_template('analyzer/index.html', message=message, word=phrase)
 
 
+@bp.route('/gamedetails', methods=['GET'])
+def details(_id):
+    _id = request.args['_id']
+    response = requests.get("https://api.dccresource.com/api/games/?_id")
+    games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
+    return render_template('analyzer/gamedetails.html', games=games)
+
+
 @bp.route('/postform', methods=('GET', 'POST'))
 def other_example():
     if request.method == 'POST':
