@@ -17,7 +17,7 @@ def index():
 
     if request.method == 'POST':
         response = requests.get("https://api.dccresource.com/api/games/")
-        games = json.loads(response.content, object_hook=lambda d:SimpleNamespace(**d))
+        games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
 
         user_input = request.form['gametitlesearch']
         foundgame = []
@@ -25,7 +25,7 @@ def index():
             if user_input in game.name:
                 foundgame.append(game)
 
-    return render_template('analyzer/index.html', foundgame = foundgame)
+    return render_template('analyzer/index.html', foundgame=foundgame)
     #games = API call
 
 # @bp.route('/analyzer')
