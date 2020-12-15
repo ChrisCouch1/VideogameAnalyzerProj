@@ -50,7 +50,7 @@ def index():
             if user_input in game.name:
                 foundgame.append(game)
 
-    return render_template('analyzer/index.html', foundgame = foundgame)
+    return render_template('analyzer/index.html', foundgame=foundgame)
     #games = API call
 
 # @bp.route('/analyzer')
@@ -58,6 +58,14 @@ def index():
 #     message = "This text is coming from the 'analyzer.py' module, not the html file!"
 #     phrase = "Python is cool!"
 #     return render_template('analyzer/index.html', message=message, word=phrase)
+
+
+@bp.route('/gamedetails', methods=['GET'])
+def details(_id):
+    _id = request.args['_id']
+    response = requests.get("https://api.dccresource.com/api/games/?_id")
+    games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
+    return render_template('analyzer/gamedetails.html', games=games)
 
 
 @bp.route('/postform', methods=('GET', 'POST'))

@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 
 {% block header %}
+<h1 style="text-align: center">{% block title %} {{ games['name'] }} {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
+<h4>Publisher: {{ games['publisher'] }}</h4>
+<h4>Year: {{ games['year'] }}</h4>
+<h4>Platform: {{ games['platform'] }}</h4>
+<h4>Genre: {{ games['genre'] }}</h4>
+<h4>Sales in N. America (in millions): {{ games['naSales'] }}</h4>
+<h4>Sales in Europe (in millions): {{ games['euSales'] }}</h4>
+<h4>Sales in Japan (''): {{ games['jpSales'] }}</h4>
+<h4>Sales in other areas (''): {{ games['otherSales'] }}</h4>
+<h4>Games sold globally (''): {{ games['globalSales'] }}</h4>
 {% endblock %}
