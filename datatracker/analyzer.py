@@ -60,6 +60,10 @@ def index():
     foundgame = []
 
     if request.method == 'POST':
+        gameid = request.form.get('gameid')
+        if gameid is not None:
+            return details(gameid)
+
         with open('datatracker/data/vgdb.json') as openfile:
             games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
 
@@ -78,13 +82,20 @@ def index():
 #     return render_template('analyzer/index.html', message=message, word=phrase)
 
 
-@bp.route('/gamedetails', methods=['GET', 'POST'])
-def details():
-    gameid = request.form.get('gameid', "1")
-    postURL = "https://api.dccresource.com/api/games/"
-    response = requests.post(postURL + gameid)
-    games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
-    return render_template('analyzer/gamedetails.html', games=games)
+@bp.route('/analyzer/gamedetails', methods=['GET', 'POST'])
+def details(gameid):
+
+    gameid = request.form.get('gameid')
+
+    with open('datatracker/data/vgdb.json') as openfile:
+        games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
+
+    for game in games:
+        if gameid == game._id:
+            foundgame = game
+            break
+
+    return render_template('analyzer/gamedetails.html', games=foundgame)
 
 
 @bp.route('/postform', methods=('GET', 'POST'))
