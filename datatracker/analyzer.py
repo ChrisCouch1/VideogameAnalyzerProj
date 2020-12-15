@@ -85,7 +85,7 @@ def index():
 @bp.route('/analyzer/gamedetails', methods=['GET', 'POST'])
 def details(gameid):
 
-    # gameid = request.form.get('gameid')
+    gameid = request.form.get('gameid')
 
     with open('datatracker/data/vgdb.json') as openfile:
         games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
@@ -93,9 +93,11 @@ def details(gameid):
     for game in games:
         if gameid == game._id:
             foundgame = game
+            sales_for_region = {game.naSales, game.euSales, game.jpSales, game.otherSales}
             break
+    regions = {"North America", "Europe", "Japan", "Other"}
 
-    return render_template('analyzer/gamedetails.html', games=foundgame)
+    return render_template('analyzer/gamedetails.html', games=foundgame, salesRegions=regions, salesForRegion=sales_for_region)
 
 
 @bp.route('/postform', methods=('GET', 'POST'))

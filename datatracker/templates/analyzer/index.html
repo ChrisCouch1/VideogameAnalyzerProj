@@ -32,7 +32,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ game['name'] }} </h5>
             <p class="card-text">{{game['platform'] }} - {{game['year'] }} - {{game['publisher'] }}</p>
-              <form class="detail-btn" action="/gamedetails" method="post">
+              <form class="detail-btn" method="post">
                   <input type="hidden" id="gameid" name="gameid" value="{{ game['_id'] }}">
                   <button type="submit" class="btn btn-primary">Details</button>
               </form>

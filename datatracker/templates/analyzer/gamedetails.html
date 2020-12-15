@@ -5,15 +5,52 @@
 {% endblock %}
 
 {% block content %}
+<section>
+    <h4>Publisher: {{ games['publisher'] }}</h4>
+    <h4>Year: {{ games['year'] }}</h4>
+    <h4>Platform: {{ games['platform'] }}</h4>
+    <h4>Genre: {{ games['genre'] }}</h4>
+    <h4>Sales in N. America (in millions): {{ games['naSales'] }}</h4>
+    <h4>Sales in Europe (in millions): {{ games['euSales'] }}</h4>
+    <h4>Sales in Japan (''): {{ games['jpSales'] }}</h4>
+    <h4>Sales in other areas (''): {{ games['otherSales'] }}</h4>
+    <h4>Games sold globally (''): {{ games['globalSales'] }}</h4>
+</section>
+<article>
+    <div class = "row">
+        <div class ="col-1"></div>
+        <div class ="col-10"><canvas id="salesbyregion" width="60px" height="40px"></canvas></div>
+    <div class ="col-1"></div>
+</div>
+</article>
 
-<h4>Publisher: {{ games['publisher'] }}</h4>
-<h4>Year: {{ games['year'] }}</h4>
-<h4>Platform: {{ games['platform'] }}</h4>
-<h4>Genre: {{ games['genre'] }}</h4>
-<h4>Sales in N. America (in millions): {{ games['naSales'] }}</h4>
-<h4>Sales in Europe (in millions): {{ games['euSales'] }}</h4>
-<h4>Sales in Japan (''): {{ games['jpSales'] }}</h4>
-<h4>Sales in other areas (''): {{ games['otherSales'] }}</h4>
-<h4>Games sold globally (''): {{ games['globalSales'] }}</h4>
+<script src="./../../static/Chart.js"></script>
+<script>
+    var ctx = document.getElementById('salesbyregion');
+    var salesbyregion = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for region in salesRegions %}'{{ region }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+                label: 'Regional Sales',
+                data: [{% for salesfig in salesForRegion %}{{ salesfig }}{% if not loop.last %}, {% endif %}{% endfor %}],
 
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            title: {
+                display: true,
+                text: 'Game Sales Per Region'
+            }
+        }
+    });
+</script>
 {% endblock %}
