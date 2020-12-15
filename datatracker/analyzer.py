@@ -61,10 +61,11 @@ def index():
 #     return render_template('analyzer/index.html', message=message, word=phrase)
 
 
-@bp.route('/gamedetails', methods=['GET'])
-def details(_id):
-    _id = request.args['_id']
-    response = requests.get("https://api.dccresource.com/api/games/?_id")
+@bp.route('/gamedetails', methods=['GET', 'POST'])
+def details():
+    gameid = request.form.get('gameid', "1")
+    postURL = "https://api.dccresource.com/api/games/"
+    response = requests.post(postURL + gameid)
     games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
     return render_template('analyzer/gamedetails.html', games=games)
 

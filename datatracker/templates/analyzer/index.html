@@ -32,7 +32,10 @@
           <div class="card-body">
             <h5 class="card-title">{{ game['name'] }} </h5>
             <p class="card-text">{{game['platform'] }} - {{game['year'] }} - {{game['publisher'] }}</p>
-            <a href="/gamedetails" class="btn btn-primary" onclick="details({{ game['_id'] }}">Details</a>
+              <form class="detail-btn" method="post">
+                  <input type="hidden" id="gameid" name="gameid" value="{{ game['_id'] }}">
+                  <button type="submit" href="/gamedetails" class="btn btn-primary">Details</button>
+              </form>
           </div>
         </div>
     {% endfor %}
