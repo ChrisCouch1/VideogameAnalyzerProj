@@ -54,7 +54,7 @@ def system_sales():
 
     return render_template('analyzer/systems.html', platforms13 = systems_2013, sales13 = sales_2013, platforms19 = systems_2019, sales19 = sales_2019)
 
-
+@bp.route('/', methods=['GET', 'POST'])
 @bp.route('/analyzer', methods=['GET', 'POST'])
 def index():
     foundgame = []
@@ -85,7 +85,7 @@ def index():
 @bp.route('/analyzer/gamedetails', methods=['GET', 'POST'])
 def details(gameid):
 
-    gameid = request.form.get('gameid')
+    # gameid = request.form.get('gameid')
 
     with open('datatracker/data/vgdb.json') as openfile:
         games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
