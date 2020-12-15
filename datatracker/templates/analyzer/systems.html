@@ -6,21 +6,20 @@
 {% block content %}
 <div class = "row">
     <div class ="col-1"></div>
-    <div class ="col-10"><canvas id="salesChart" width="400px" height="400px"></canvas></div>
+    <div class ="col-10"><canvas id="salesChart13" width="400px" height="400px"></canvas></div>
     <div class ="col-1"></div>
 </div>
 
-
 <script src="./../../static/chartjs/dist/Chart.js"></script>
 <script>
-    var ctx = document.getElementById('salesChart');
-    var salesChart = new Chart(ctx, {
+    var ctx = document.getElementById('salesChart13');
+    var salesChart13 = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [{% for platform in platforms %}'{{ platform }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+            labels: [{% for platform in platforms13 %}'{{ platform }}'{% if not loop.last %}, {% endif %}{% endfor %}],
             datasets: [{
                 label: 'Global Sales - Millions Games Sold',
-                data: [{% for salesfig in sales %}{{ salesfig }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                data: [{% for salesfig in sales13 %}{{ salesfig }}{% if not loop.last %}, {% endif %}{% endfor %}],
                 
                 borderWidth: 1
             }]
@@ -32,8 +31,15 @@
                         beginAtZero: true
                     }
                 }]
+            },
+            title: {
+                display: true,
+                text: 'Game Sales Per Platform Since 2013'
             }
         }
     });
+
 </script>
+
+
 {% endblock %}
