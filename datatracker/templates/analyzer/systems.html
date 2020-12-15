@@ -4,10 +4,12 @@
 {% endblock %}
 
 {% block content %}
+<div class = "row">
+    <div class ="col-1"></div>
+    <div class ="col-10"><canvas id="salesChart" width="400px" height="400px"></canvas></div>
+    <div class ="col-1"></div>
+</div>
 
-{{ sales }}
-
-<canvas id="salesChart" width="400" height="400"></canvas>
 
 <script src="./../../static/chartjs/dist/Chart.js"></script>
 <script>
@@ -33,6 +35,5 @@
             }
         }
     });
-
 </script>
 {% endblock %}

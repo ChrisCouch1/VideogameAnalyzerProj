@@ -1,5 +1,8 @@
+import json
 import os
+from types import SimpleNamespace
 
+import requests
 from flask import Flask
 
 
@@ -14,10 +17,17 @@ def create_app():
     except OSError:
         pass
 
+    response = requests.get("https://api.dccresource.com/api/games/")
+    games = json.loads(response.content)
+    with open('datatracker/data/vgdb.json', 'w') as openfile:
+        json.dump(games, openfile)
+
     from . import analyzer
     app.register_blueprint(analyzer.bp)
 
     # app.add_url_rule('/', endpoint='index')
+
+
 
     @app.route('/hello')
     def hello():

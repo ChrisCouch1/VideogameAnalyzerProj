@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request, redirect, flash, render_template, url_for, Blueprint
+from flask import Flask, jsonify, request, redirect, flash, render_template, url_for, Blueprint, session
 from types import SimpleNamespace
+
 import requests, json
 
 bp = Blueprint('analyzer', __name__)
@@ -10,8 +11,9 @@ def test():
 
 @bp.route('/analyzer/systems', methods=['GET', 'POST'])
 def system_sales():
-    response = requests.get("https://api.dccresource.com/api/games/")
-    games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
+
+    with open('datatracker/data/vgdb.json') as openfile:
+        games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
 
     platform_total_sales = {}
 
@@ -37,14 +39,11 @@ def system_sales():
 
 @bp.route('/analyzer', methods=['GET', 'POST'])
 def index():
-
-    response = requests.get("https://api.dccresource.com/api/games/5faac562db090e1a5c2dea16")
-    games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
     foundgame = []
 
     if request.method == 'POST':
-        response = requests.get("https://api.dccresource.com/api/games/")
-        games = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
+        with open('datatracker/data/vgdb.json') as openfile:
+            games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
 
         user_input = request.form['gametitlesearch']
         for game in games:
