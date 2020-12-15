@@ -98,6 +98,44 @@ def details(gameid):
     return render_template('analyzer/gamedetails.html', games=foundgame)
 
 
+@bp.route('/analyzer/publishers', methods=['GET', 'POST'])
+def publishers():
+
+    with open('datatracker/data/vgdb.json') as openfile:
+        games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
+
+    gameplatforms = []
+
+    for game in games:
+        platform = game.platform
+        if platform not in gameplatforms:
+            gameplatforms.append(platform)
+
+    if request.method == 'POST':
+        consoleselected = request.form.get('consoles')
+        if consoleselected is not None:
+            publishers = platformpublisher(consoleselected)
+            return render_template('analyzer/publishers.html', consoleselected=consoleselected, platforms = gameplatforms, publishers = publishers)
+
+    return render_template('analyzer/publishers.html', platforms = gameplatforms, consoleselected = None)
+
+def platformpublisher(consoleselected):
+    publishers = {}
+
+    with open('datatracker/data/vgdb.json') as openfile:
+        games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
+
+    for game in games:
+        if game.platform == consoleselected:
+            publisher = game.publisher
+            if publisher not in publishers.keys():
+                publishers.update({game.publisher: game.globalSales})
+            else:
+                publishers.update({game.publisher: (publishers[publisher] + game.globalSales)})
+
+    return publishers
+
+
 @bp.route('/postform', methods=('GET', 'POST'))
 def other_example():
     if request.method == 'POST':
