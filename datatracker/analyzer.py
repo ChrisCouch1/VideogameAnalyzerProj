@@ -52,7 +52,8 @@ def system_sales():
     systems_2019 = list(total_sales_2019.keys())
     sales_2019 = list(total_sales_2019.values())
 
-    return render_template('analyzer/systems.html', platforms13 = systems_2013, sales13 = sales_2013, platforms19 = systems_2019, sales19 = sales_2019)
+    return render_template('analyzer/systems.html', platforms13=systems_2013, sales13=sales_2013, platforms19=systems_2019, sales19=sales_2019)
+
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/analyzer', methods=['GET', 'POST'])
@@ -93,9 +94,10 @@ def details(gameid):
     for game in games:
         if gameid == game._id:
             foundgame = game
+            regions = {"North America", "Europe", "Japan", "Other"}
             sales_for_region = {game.naSales, game.euSales, game.jpSales, game.otherSales}
             break
-    regions = {"North America", "Europe", "Japan", "Other"}
+
 
     return render_template('analyzer/gamedetails.html', games=foundgame, salesRegions=regions, salesForRegion=sales_for_region)
 
