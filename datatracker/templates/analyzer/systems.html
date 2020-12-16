@@ -18,9 +18,9 @@
         data: {
             labels: [{% for platform in platforms13 %}'{{ platform }}'{% if not loop.last %}, {% endif %}{% endfor %}],
             datasets: [{
-                label: 'Global Sales - Millions Games Sold',
+                label: 'Millions of Game Copies Sold',
                 data: [{% for salesfig in sales13 %}{{ salesfig }}{% if not loop.last %}, {% endif %}{% endfor %}],
-                
+                backgroundColor: [{% for each in platforms13 %}'#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6){% if not loop.last %}, {% endif %}{% endfor %}],
                 borderWidth: 1
             }]
         },

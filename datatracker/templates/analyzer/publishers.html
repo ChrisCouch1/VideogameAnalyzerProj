@@ -44,7 +44,7 @@
             labels: [{% for publisher in publishers %}'{{ publisher }}'{% if not loop.last %}, {% endif %}{% endfor %}],
             datasets: [{
                 data: [{% for sales in publishers %}{{ publishers[sales] }}{% if not loop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: ['#ff0000', '#fbb034', '#ffdd00', '#c1d82f', '#00a4e4', '#8a7967', '#6a737b']
+                backgroundColor: [{% for each in publishers %}'#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6){% if not loop.last %}, {% endif %}{% endfor %}]
             }]
         },
         options: {
