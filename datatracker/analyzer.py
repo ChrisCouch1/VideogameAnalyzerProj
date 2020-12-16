@@ -213,6 +213,13 @@ def vgtrend():
             else:
                 othersales.update({game.year: (othersales[year] + game.otherSales)})
 
+    #sort dicts
+    globalsales = dict(sorted(globalsales.items()))
+    nasales = dict(sorted(nasales.items()))
+    eusales = dict(sorted(eusales.items()))
+    jpsales = dict(sorted(jpsales.items()))
+    othersales = dict(sorted(othersales.items()))
+
     return render_template('analyzer/gamingtrend.html', globalsales = globalsales, nasales = nasales, eusales = eusales, jpsales = jpsales, othersales = othersales)
 
 @bp.route('/postform', methods=('GET', 'POST'))
