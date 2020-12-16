@@ -94,8 +94,8 @@ def details(gameid):
     for game in games:
         if gameid == game._id:
             foundgame = game
-            regions = {"North America", "Europe", "Japan", "Other"}
-            sales_for_region = {game.naSales, game.euSales, game.jpSales, game.otherSales}
+            regions = ["North America", "Europe", "Japan", "Other"]
+            sales_for_region = [game.naSales, game.euSales, game.jpSales, game.otherSales]
             break
 
 
