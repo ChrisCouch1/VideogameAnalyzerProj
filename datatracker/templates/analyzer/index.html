@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<p>Enter a videogame title below to retrieve its details</p>
-
+<p>Search for a videogame by title</p>
 
 <form method="post">
     <div class = "row">
@@ -19,26 +18,24 @@
     </div>
 </form>
 
-
-<p>This page extends the "base.html" file and inserts its various "blocks" (header, title and content) into the locations laid out for those blocks.</p>
-<p>This behaves similar to the '_Layout' feature in ASP.NET and allows you to easily keep a consistent theme across many pages and reuse elements like navbars.</p>
-<p>It can also display variables and information that is passed in to the view from the corresponding 'index' Blueprint action from the 'sample.py' module by calling the variable with double curly braces</p>
-<p>This following line is the 'message' variable from the index action:</p>
-
-{{ game }}
-
+<div class="row row-cols-1 row-cols-md-4 g-4 mt-2">
     {% for game in foundgame %}
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{ game['name'] }} </h5>
-            <p class="card-text">{{game['platform'] }} - {{game['year'] }} - {{game['publisher'] }}</p>
-              <form class="detail-btn" method="post">
-                  <input type="hidden" id="gameid" name="gameid" value="{{ game['_id'] }}">
-                  <button type="submit" class="btn btn-primary">Details</button>
-              </form>
-          </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ game['name'] }} </h5>
+                    <p class="card-text">{{game['platform'] }} - {{game['year'] }} - {{game['publisher'] }}</p>
+                    <div class="mt-auto">
+                        <form method="post">
+                              <input type="hidden" id="gameid" name="gameid" value="{{ game['_id'] }}">
+                              <button type="submit" class="btn btn-outline-primary">Details</button>
+                        </form>
+                    </div>
+              </div>
+            </div>
         </div>
     {% endfor %}
+</div>
 
 <p>(Always remember to close off your ifs and your loops!)</p>
 {% endblock %}
