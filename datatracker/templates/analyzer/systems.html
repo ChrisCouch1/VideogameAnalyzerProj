@@ -9,12 +9,12 @@
     <div class = "row">
         <div class = "col-9">
             <label for="consoles">Choose a console to view game sales data for</label>
-            <form name="consoleselect" method="post">
-            <select class="form-select" id="consoles" name="consoles">
-               {% for console in platforms %}
-               <option  value="{{ console }}">{{ console }}</option>
-               {% endfor %}
-            </select>
+            <form method="post">
+                <select class="form-select" id="consoles" name="consoles">
+                {% for console in platforms %}
+                    <option  value="{{ console }}">{{ console }}</option>
+                {% endfor %}
+                </select>
             </form>
         </div>
         <div class = "col-auto d-grid gap-2">
@@ -24,22 +24,16 @@
     </div>
 </form>
 </div>
-{% if consoleselect == null %}
 <div class = "row">
     <div class ="col-1"></div>
-    <div class ="col-10"><canvas id="salesChart13" width="400px" height="400px"></canvas></div>
+    <div class ="col-10"><canvas id="chart_placeholder" width="400px" height="400px"></canvas></div>
     <div class ="col-1"></div>
 </div>
-{% elif consoleselect != null %}
-<div class = "row">
-    <div class ="col-1"></div>
-    <div class ="col-10"><canvas id="salesChartConsole" width="400px" height="400px"></canvas></div>
-    <div class ="col-1"></div>
-</div>
-{% endif %}
+
+
 <script src="./../../static/Chart.js"></script>
 <script>
-    var ctx = document.getElementById('salesChart13');
+    var ctx = document.getElementById('chart_placeholder');
     var salesChart13 = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -66,8 +60,8 @@
         }
     });
 
-    var ctx = document.getElementById('salesChartConsole');
-    var salesChartConsole = new Chart(ctx, {
+    var cts = document.getElementById('chart_placeholder');
+    var salesChartConsole = new Chart(cts, {
         type: 'pie',
         data: {
             labels: [{% for title in console_titles %}'{{ title }}'{% if not loop.last %}, {% endif %}{% endfor %}],
@@ -94,17 +88,14 @@
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
+
             title: {
                 display: true,
                 text: 'Game Sales on Console'
-            }
+            },
+            legend: {
+                display: false
+                }
         }
     });
 </script>

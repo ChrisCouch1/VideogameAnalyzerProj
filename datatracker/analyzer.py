@@ -24,6 +24,11 @@ def system_sales():
         if platform not in gameplatforms:
             gameplatforms.append(platform)
 
+    if request.method == "POST":
+        consoleselected = request.form.get('consoles')
+        if consoleselected is not None:
+            return system_sales_by_console(consoleselected)
+
     #PSEUDOCODE FOR PLATFORM SALES CALCULATION
     #for each game
         #if game.year > ___
@@ -64,8 +69,6 @@ def system_sales():
 def system_sales_by_console(consoleselected):
     with open('datatracker/data/vgdb.json') as openfile:
         games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
-    consoleselected = request.form.get('consoleselect')
-    titles_on_console = []
     sales_by_title = {}
     gameplatforms = []
 
@@ -74,12 +77,14 @@ def system_sales_by_console(consoleselected):
         if platform not in gameplatforms:
             gameplatforms.append(platform)
 
+
     for game in games:
         if game.platform == consoleselected:
-            if game.name not in sales_by_title.keys():
-                titles_on_console.append(game.name)
-                sales_by_title.update({game.name: game.globalSales})
+            name = game.name
+            if name not in sales_by_title.keys():
+                sales_by_title.update({name: game.globalSales})
 
+    titles_on_console = list(sales_by_title.keys())
     sales_list = list(sales_by_title.values())
     return render_template('analyzer/systems.html', platforms=gameplatforms, console_titles=titles_on_console, title_sales=sales_list)
 
