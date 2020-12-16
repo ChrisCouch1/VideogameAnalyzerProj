@@ -169,6 +169,51 @@ def platformpublisher(consoleselected):
 
     return publishers
 
+@bp.route('/analyzer/gamingtrend', methods=['GET'])
+def vgtrend():
+    globalsales = {}
+    nasales = {}
+    eusales = {}
+    jpsales = {}
+    othersales = {}
+
+    with open('datatracker/data/vgdb.json') as openfile:
+        games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
+
+    for game in games:
+        year = game.year
+        if year is not None:
+            #update global sales dict
+            if year not in globalsales.keys():
+                globalsales.update({game.year: game.globalSales})
+            else:
+                globalsales.update({game.year:(globalsales[year] + game.globalSales)})
+
+            # update na sales dict
+            if year not in nasales.keys():
+                nasales.update({game.year: game.naSales})
+            else:
+                nasales.update({game.year:(nasales[year] + game.naSales)})
+
+            # update eu sales dict
+            if year not in eusales.keys():
+                eusales.update({game.year: game.euSales})
+            else:
+                eusales.update({game.year:(eusales[year] + game.euSales)})
+
+            # update jp sales dict
+            if year not in jpsales.keys():
+                jpsales.update({game.year: game.jpSales})
+            else:
+                jpsales.update({game.year:(jpsales[year] + game.jpSales)})
+
+            # update other sales dict
+            if year not in othersales.keys():
+                othersales.update({game.year: game.otherSales})
+            else:
+                othersales.update({game.year: (othersales[year] + game.otherSales)})
+
+    return render_template('analyzer/gamingtrend.html', globalsales = globalsales, nasales = nasales, eusales = eusales, jpsales = jpsales, othersales = othersales)
 
 @bp.route('/postform', methods=('GET', 'POST'))
 def other_example():

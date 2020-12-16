@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<div class = "row">
+    <div class ="col-1"></div>
+    <div class ="col-10"><canvas id="gamingsalestrend" width="400px" height="400px"></canvas></div>
+    <div class ="col-1"></div>
+</div>
+
+<script src="./../../static/Chart.js"></script>
+<script>
+    var ctx = document.getElementById('gamingsalestrend');
+    var scatterChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Global - Yearly Sales of All Video Games (millions)',
+                pointBackgroundColor: 'black',
+                data: [{% for each in globalsales %} {x:{{each}}, y:{{globalsales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
+            },
+            {
+                label: 'NA - Yearly Sales of All Video Games (millions)',
+                pointBackgroundColor: 'red',
+                data: [{% for each in nasales %} {x:{{each}}, y:{{nasales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
+            },
+            {
+                label: 'EU - Yearly Sales of All Video Games (millions)',
+                pointBackgroundColor: 'blue',
+                data: [{% for each in eusales %} {x:{{each}}, y:{{eusales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
+            },
+            {
+                label: 'JP - Yearly Sales of All Video Games (millions)',
+                pointBackgroundColor: 'orange',
+                data: [{% for each in jpsales %} {x:{{each}}, y:{{jpsales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
+            },
+            {
+                label: 'Other - Yearly Sales of All Video Games (millions)',
+                pointBackgroundColor: 'magenta',
+                data: [{% for each in othersales %} {x:{{each}}, y:{{othersales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
+            }
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+
+</script>
+{% endblock %}
