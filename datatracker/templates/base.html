@@ -19,16 +19,16 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                            <a class="nav-link" href="../analyzer">Home</a>
+                            <a class="nav-link" href="{{ url_for('analyzer.index') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="analyzer/games">Games</a>
+                            <a class="nav-link" href="#">Games</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="analyzer/systems">Game Systems</a>
+                            <a class="nav-link" href="{{ url_for('analyzer.system_sales') }}">Game Systems</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="analyzer/publishers">Publishers</a>
+                            <a class="nav-link" href="{{ url_for('analyzer.publishers') }}">Publishers</a>
                             </li>
                         </ul>
                     </div>

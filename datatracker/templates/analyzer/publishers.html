@@ -4,4 +4,59 @@
 {% endblock %}
 
 {% block content %}
+<div class="mt-3">
+<form method="post">
+    <div class = "row">
+        <div class = "col-9">
+            <label for="consoles">Choose a console to view publisher data for</label>
+            <select class="form-select" id="consoles" name="consoles">
+               {% for console in platforms %}
+               <option {% if console == consoleselected %} selected {% endif %} value="{{ console }}">{{ console }}</option>
+               {% endfor %}
+            </select>
+        </div>
+        <div class = "col-auto d-grid gap-2">
+            <button class="btn btn-primary" type="submit" >Search</button>
+        </div>
+
+    </div>
+</form>
+</div>
+
+{% if consoleselected != None %}
+<div class = "row">
+    <div class ="col-1"></div>
+    <div class ="col-10"><canvas id="publisherbyplat" width="400px" height="400px"></canvas></div>
+    <div class ="col-1"></div>
+</div>
+{% endif %}
+
+<div class="mt-3">
+
+</div>
+
+<script src="./../../static/chartjs/dist/Chart.js"></script>
+<script>
+    var ctx = document.getElementById('publisherbyplat');
+    var publisherbyplat = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [{% for publisher in publishers %}'{{ publisher }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+                data: [{% for sales in publishers %}{{ publishers[sales] }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                backgroundColor: [{% for each in publishers %}'#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6){% if not loop.last %}, {% endif %}{% endfor %}]
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Game Sales Per Publisher For {{ consoleselected }}'
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+</script>
 {% endblock %}
