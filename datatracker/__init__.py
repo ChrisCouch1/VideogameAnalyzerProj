@@ -18,9 +18,10 @@ def create_app():
         pass
 
     response = requests.get("https://api.dccresource.com/api/games/")
-    games = json.loads(response.content)
-    with open('datatracker/data/vgdb.json', 'w') as openfile:
-        json.dump(games, openfile)
+    if response.status_code == 200:
+        games = json.loads(response.content)
+        with open('datatracker/data/vgdb.json', 'w') as openfile:
+            json.dump(games, openfile)
 
     from . import analyzer
     app.register_blueprint(analyzer.bp)
