@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-
+<blockquote class="blockquote">Evaluation Question: What is the industry trend, broken down by region, of videogame sales?</blockquote>
+<h5>Answer: Data collected here indicates total game sales peaked in 2008 and has been on the downturn since. Further analysis of the source data is needed.</h5>
 <div class = "row">
     <div class ="col-1"></div>
     <div class ="col-10"><canvas id="gamingsalestrend" width="400px" height="400px"></canvas></div>
@@ -22,35 +23,35 @@
         type: 'line',
         data: {
             datasets: [{
-                label: 'Global - Yearly Sales of All Video Games (millions)',
+                label: 'Global',
                 fill: false,
                 borderColor: 'black',
                 backgroundColor: 'black',
                 data: [{% for each in globalsales %} {x:{{each}}, y:{{globalsales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
             },
             {
-                label: 'NA - Yearly Sales of All Video Games (millions)',
+                label: 'NA',
                 borderColor: 'red',
                 backgroundColor: 'red',
                 fill: false,
                 data: [{% for each in nasales %} {x:{{each}}, y:{{nasales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
             },
             {
-                label: 'EU - Yearly Sales of All Video Games (millions)',
+                label: 'EU',
                 borderColor: 'blue',
                 backgroundColor: 'blue',
                 fill: false,
                 data: [{% for each in eusales %} {x:{{each}}, y:{{eusales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
             },
             {
-                label: 'JP - Yearly Sales of All Video Games (millions)',
+                label: 'JP',
                 borderColor: 'orange',
                 backgroundColor: 'orange',
                 fill: false,
                 data: [{% for each in jpsales %} {x:{{each}}, y:{{jpsales[each]}}} {% if not loop.last %}, {% endif %} {% endfor %}]
             },
             {
-                label: 'Other - Yearly Sales of All Video Games (millions)',
+                label: 'Other',
                 borderColor: 'magenta',
                 BackgroundColor: 'magenta',
                 fill: false,
@@ -63,6 +64,12 @@
                 xAxes: [{
                     type: 'linear',
                     position: 'bottom'
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Millions of game copies sold'
+                        }
                 }]
             }
         }

@@ -1,10 +1,22 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% block header %}<h1 style="text-align: center">{% block title %} Console Specific Sales {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<div class="mt-3">
+<blockquote class="blockquote">Evaluation Question #1: Which video game console is best to invest in based on the number of game copies sold globally on that console since 2013?</blockquote>
+<h5>Answer: Based upon data collected, the best videogame console to invest in would be the PS4 as it had the most videogames sold out of any console since 2013.</h5>
+
+<div class = "row">
+    <div class ="col-1"></div>
+    <div class ="col-10"><canvas id="chart1" width="400px" height="400px"></canvas></div>
+    <div class ="col-1"></div>
+</div>
+
+<blockquote class="blockquote">Evaluation Question #2: What were the top selling games per console?</blockquote>
+<h5>Answer: Utilize the dropdown to view a visualization to answer this question on a per-console basis.</h5>
+
+<div class="m-3">
 <form method="post">
     <div class = "row">
         <div class = "col-9">
@@ -24,16 +36,18 @@
     </div>
 </form>
 </div>
+
+{% if consoleselected != None %}
 <div class = "row">
     <div class ="col-1"></div>
-    <div class ="col-10"><canvas id="chart_placeholder" width="400px" height="400px"></canvas></div>
+    <div class ="col-10"><canvas id="chart2" width="400px" height="400px"></canvas></div>
     <div class ="col-1"></div>
 </div>
-
+{% endif %}
 
 <script src="./../../static/Chart.js"></script>
 <script>
-    var ctx = document.getElementById('chart_placeholder');
+    var ctx = document.getElementById('chart1');
     var salesChart13 = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -41,7 +55,7 @@
             datasets: [{
                 label: 'Millions of Game Copies Sold',
                 data: [{% for salesfig in sales13 %}{{ salesfig }}{% if not loop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: [{% for each in platforms13 %}'#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6){% if not loop.last %}, {% endif %}{% endfor %}],
+                backgroundColor: ['#e6194B', '#3cb44b', '#a9a9a9', '#f58231', '#42d4f4', '#f032e6', '#ffe119', '#4363d8', '#bfef45', '#911eb4'],
                 borderWidth: 1
             }]
         },
@@ -50,17 +64,24 @@
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Millions of game copies sold'
                     }
                 }]
             },
             title: {
                 display: true,
                 text: 'Game Sales Per Platform Since 2013'
+            },
+            legend: {
+                display: false
             }
         }
     });
 
-    var cts = document.getElementById('chart_placeholder');
+    var cts = document.getElementById('chart2');
     var salesChartConsole = new Chart(cts, {
         type: 'pie',
         data: {
@@ -95,7 +116,7 @@
             },
             legend: {
                 display: false
-                }
+            }
         }
     });
 </script>

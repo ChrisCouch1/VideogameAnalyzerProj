@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block content %}
+<p>This video game analyzer dashboard is composed of a few screens, navigable by the bar at the top of this page</p>
+<ul>
+    <li>HOME: Video game search by title & details functionality</li>
+    <li>INDUSTRY-TREND: View health of the industry via total sales of all games</li>
+    <li>CONSOLE-SALES: View console-specific sales figures</li>
+    <li>PUBLISHER-SALES/CONSOLE: View breakdown of publisher performance on a per-console basis</li>
+</ul>
 <p>Search for a videogame by title</p>
 
 <form method="post">
@@ -37,5 +44,4 @@
     {% endfor %}
 </div>
 
-<p>(Always remember to close off your ifs and your loops!)</p>
 {% endblock %}

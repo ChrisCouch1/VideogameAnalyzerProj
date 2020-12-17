@@ -16,18 +16,12 @@ def system_sales():
         games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
 
     total_sales_2013 = {}
-    total_sales_2019 = {}
     gameplatforms = []
 
     for game in games:
         platform = game.platform
         if platform not in gameplatforms:
             gameplatforms.append(platform)
-
-    if request.method == "POST":
-        consoleselected = request.form.get('consoles')
-        if consoleselected is not None:
-            return system_sales_by_console(consoleselected)
 
     #PSEUDOCODE FOR PLATFORM SALES CALCULATION
     #for each game
@@ -48,22 +42,24 @@ def system_sales():
                     total_sales_2013.update({platform: game.globalSales})
                 else:
                     total_sales_2013.update({platform: (total_sales_2013[platform] + game.globalSales)})
-            if game.year >= 2019:
-                platform = game.platform
-                if platform not in total_sales_2019.keys():
-                    total_sales_2019.update({platform: game.globalSales})
-                else:
-                    total_sales_2019.update({platform: (total_sales_2019[platform] + game.globalSales)})
-
 
 
     systems_2013 = list(total_sales_2013.keys())
     sales_2013 = list(total_sales_2013.values())
 
-    systems_2019 = list(total_sales_2019.keys())
-    sales_2019 = list(total_sales_2019.values())
+    if request.method == "POST":
+        consoleselected = request.form.get('consoles')
+        if consoleselected is not None:
+            sales_by_title = system_sales_by_console(consoleselected)
+            titles_on_console = list(sales_by_title.keys())
+            sales_list = list(sales_by_title.values())
+            return render_template('analyzer/systems.html', platforms=gameplatforms, platforms13=systems_2013,
+                            sales13=sales_2013, console_titles=titles_on_console,
+                            title_sales=sales_list, consoleselected = consoleselected)
 
-    return render_template('analyzer/systems.html', platforms=gameplatforms, platforms13=systems_2013, sales13=sales_2013, platforms19=systems_2019, sales19=sales_2019)
+
+
+    return render_template('analyzer/systems.html', platforms=gameplatforms, platforms13=systems_2013, sales13=sales_2013, consoleselected = None)
 
 
 def system_sales_by_console(consoleselected):
@@ -84,9 +80,7 @@ def system_sales_by_console(consoleselected):
             if name not in sales_by_title.keys():
                 sales_by_title.update({name: game.globalSales})
 
-    titles_on_console = list(sales_by_title.keys())
-    sales_list = list(sales_by_title.values())
-    return render_template('analyzer/systems.html', platforms=gameplatforms, console_titles=titles_on_console, title_sales=sales_list)
+    return sales_by_title
 
 
 
