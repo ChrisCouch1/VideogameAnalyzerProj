@@ -116,6 +116,7 @@ def index():
 def details(gameid):
 
     gameid = request.form.get('gameid')
+    multiplatgames = []
 
     with open('datatracker/data/vgdb.json') as openfile:
         games = json.loads(openfile.read(), object_hook=lambda d: SimpleNamespace(**d))
@@ -127,8 +128,13 @@ def details(gameid):
             sales_for_region = [game.naSales, game.euSales, game.jpSales, game.otherSales]
             break
 
+    for game in games:
+        if game.name == foundgame.name and game._id != foundgame._id:
+            multiplatgames.append(game)
 
-    return render_template('analyzer/gamedetails.html', games=foundgame, salesRegions=regions, salesForRegion=sales_for_region)
+    multiplatgames.append(foundgame)
+
+    return render_template('analyzer/gamedetails.html', games=foundgame, salesRegions=regions, salesForRegion=sales_for_region, multiplatgames = multiplatgames)
 
 
 @bp.route('/analyzer/publishers', methods=['GET', 'POST'])

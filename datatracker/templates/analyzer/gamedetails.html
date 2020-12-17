@@ -16,13 +16,19 @@
     <h4>Sales in other areas (''): {{ games['otherSales'] }}</h4>
     <h4>Games sold globally (''): {{ games['globalSales'] }}</h4>
 </section>
-<article>
+
     <div class = "row">
         <div class ="col-1"></div>
         <div class ="col-10"><canvas id="salesbyregion" width="100px" height="100px"></canvas></div>
     <div class ="col-1"></div>
-</div>
-</article>
+
+    <div class = "row">
+        <div class ="col-1"></div>
+        <div class ="col-10"><canvas id="salesbyplatform" width="100px" height="100px"></canvas></div>
+    <div class ="col-1"></div>
+
+
+
 
 <script src="./../../static/Chart.js"></script>
 <script>
@@ -69,6 +75,53 @@
             title: {
                 display: true,
                 text: 'Game Sales Per Region'
+            }
+        }
+    });
+
+    var cts = document.getElementById('salesbyplatform');
+    var salesbyplatform = new Chart(cts, {
+        type: 'bar',
+        data: {
+            labels: [{% for each in multiplatgames %}'{{ each.platform }}'{% if not loop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+
+                label: 'Sales by platform',
+                data: [{% for each in multiplatgames %}{{ each.globalSales }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+                    ],
+                borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Millions of game copies sold'
+                        }
+                }]
+            },
+            title: {
+                display: true,
+                text: 'Global Game Sales On All Platforms'
             }
         }
     });

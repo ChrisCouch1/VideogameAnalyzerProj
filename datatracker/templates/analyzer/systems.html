@@ -24,7 +24,7 @@
             <form method="post">
                 <select class="form-select" id="consoles" name="consoles">
                 {% for console in platforms %}
-                    <option  value="{{ console }}">{{ console }}</option>
+                    <option {% if consoleselected == console %}selected{% endif %} value="{{ console }}">{{ console }}</option>
                 {% endfor %}
                 </select>
             </form>
