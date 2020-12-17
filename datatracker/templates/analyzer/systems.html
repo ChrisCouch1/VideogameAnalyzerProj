@@ -17,10 +17,10 @@
 <h5>Answer: Utilize the dropdown to view a visualization to answer this question on a per-console basis.</h5>
 
 <div class="m-3">
+    <p>Choose a console to view game sales data for</p>
 <form method="post">
     <div class = "row">
         <div class = "col-9">
-            <label for="consoles">Choose a console to view game sales data for</label>
             <form method="post">
                 <select class="form-select" id="consoles" name="consoles">
                 {% for console in platforms %}
@@ -29,7 +29,7 @@
                 </select>
             </form>
         </div>
-        <div class = "col-auto d-grid gap-2">
+        <div class = "col-3 d-grid">
             <button class="btn btn-primary" type="submit" >Search</button>
         </div>
 
@@ -73,7 +73,7 @@
             },
             title: {
                 display: true,
-                text: 'Game Sales Per Platform Since 2013'
+                text: 'Game Sales (in millions) Per Platform Since 2013'
             },
             legend: {
                 display: false

@@ -8,17 +8,17 @@
 <blockquote class="blockquote">Evaluation Question: Which publishers have had the most success per console?</blockquote>
 <h5>Answer: Utilize the dropdown to view a visualization to view publisher global sales on a per-console basis.</h5>
 <div class="mt-3">
+    <p>Choose a console to view publisher data for</p>
 <form method="post">
     <div class = "row">
         <div class = "col-9">
-            <label for="consoles">Choose a console to view publisher data for</label>
             <select class="form-select" id="consoles" name="consoles">
                {% for console in platforms %}
                <option {% if console == consoleselected %} selected {% endif %} value="{{ console }}">{{ console }}</option>
                {% endfor %}
             </select>
         </div>
-        <div class = "col-auto d-grid gap-2">
+        <div class = "col-3 d-grid">
             <button class="btn btn-primary" type="submit" >Search</button>
         </div>
 
@@ -53,7 +53,7 @@
         options: {
             title: {
                 display: true,
-                text: 'Game Sales Per Publisher For {{ consoleselected }}'
+                text: 'Game Sales (in millions) Per Publisher For {{ consoleselected }}'
             },
             legend: {
                 display: false
